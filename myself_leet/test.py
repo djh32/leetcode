@@ -1,12 +1,14 @@
-class Solution:
-    def solve(self, n):
-        dp = [[0] * 10 for _ in range(n)]
-        dp[0] = [0] + [1] * 9
+import numpy as np  
+import matplotlib.pyplot as plt 
+from scipy import stats
 
-        for i in range(1, n):
-            for j in range(1, 10):
-                for k in range(j):
-                    dp[i][j] += dp[i - 1][k]
-        return sum(dp[-1])
+X = np.linspace(0, 1600, 10)
 
-print(Solution().solve(3))
+std = 0.693147182
+mean = 1
+lognorm_distribution = stats.lognorm([std], loc=mean)
+lognorm_distribution_pdf = lognorm_distribution.pdf(X)
+fig, ax = plt.subplots(figsize=(8, 5))
+plt.plot(X, lognorm_distribution_pdf, label="μ=0, σ=1")
+ax.set_xticks(X)
+plt.show()
