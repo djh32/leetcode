@@ -1,5 +1,5 @@
 class ListNode:
-    def __init__(self, x,next):
+    def __init__(self, x, next=None):
         self.val = x
         self.next = next
 
@@ -50,7 +50,7 @@ class Solution2:
         return pre.next
 
     def quik_sort(self, pre, end):
-        if pre== end or pre.next ==end:
+        if pre == end or pre.next == end:
             return pre
         pivot = pre.next
         cur = ListNode(0, None)
@@ -67,20 +67,63 @@ class Solution2:
         pre.next = cur.next
         self.quik_sort(pivot, end)
         self.quik_sort(pre, pivot)
-        #return pre.next
+        # return pre.next
 
+
+"""
+上面都quick超时，使用递归拆解自己写。
+"""
+
+
+class Solution3:
+    def merge_list(self,h1: ListNode, h2: ListNode) -> ListNode:
+        h = res = ListNode(None)
+        while h1 and h2:
+            if h1.val < h2.val:
+                h.next = h1
+                h1 = h1.next
+            else:
+                h.next = h2
+                h2 = h2.next
+            h = h.next
+
+        h.next = h1 if h1 else h2
+        return res.next
+
+    def sortList(self, head: ListNode):
+        def recur(head) -> ListNode:
+            if head is None or head.next is None:
+                return head
+            fast, slow = head, head
+            while fast.next and fast.next.next:
+                slow = slow.next
+                fast = fast.next.next
+                # if fast.next:
+                #     fast = fast.next
+            mid = slow
+
+            new_left = head
+            new_right = mid.next
+            mid.next = None
+
+            left = recur(new_left)
+            right = recur(new_right)
+            return self.merge_list(left,right)
+        hd = recur(head)
+        return hd
 
 
 def recur_set(nums):
-    pre = ListNode(0,None)
+    pre = ListNode(0, None)
     n = pre
     for i in nums:
-        nd = ListNode(i,None)
+        nd = ListNode(i, None)
         n.next = nd
         n = n.next
     return pre.next
 
-nd = recur_set([9,2,3,4,5])
 
-k = Solution2().sortList(nd)
+nd = recur_set([9, 2, 3, 4, 5,8])
+
+k = Solution3().sortList(nd)
 print(k)
