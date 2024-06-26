@@ -38,7 +38,29 @@ class Solution2:
             res.append(deque[0])
         return res
 
+
 # 作者：Krahets
 # 链接：https://leetcode.cn/problems/sliding-window-maximum/solutions/2361228/239-hua-dong-chuang-kou-zui-da-zhi-dan-d-u6h0/
 # 来源：力扣（LeetCode）
 # 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+class Solution3:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+
+        tmp_queue = []
+        res = []
+        for i in range(k):  # 未形成
+            while tmp_queue and nums[tmp_queue[-1]] < nums[i]:
+                tmp_queue.pop()  # 一个一个一定是倒序
+            tmp_queue.append(i)
+        res.append(nums[tmp_queue[0]])
+        for i in range(k, len(nums)):
+            if tmp_queue and tmp_queue[0] == i - k:  # full
+                tmp_queue.pop(0)
+            while tmp_queue and nums[tmp_queue[-1]] < nums[i]:
+                tmp_queue.pop()
+            tmp_queue.append(i)
+            res.append(nums[tmp_queue[0]])
+        return res
+print(Solution3().maxSlidingWindow([5,4,3,2,1,-2,3],k=3))
