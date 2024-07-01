@@ -1,4 +1,6 @@
 from copy import deepcopy
+
+
 # 困难题：从头到位没看解答，自己写的，写了他妈一小时。
 class Solution:
 
@@ -14,16 +16,19 @@ class Solution:
             multi_accum = 1
             for i in range(1, len(left) + 1):
                 multi_accum *= i
-            sheld = [multi_accum / len(left) * i for i in range(1,len(left)+1)]  # [6,12,18,24]  如果k 大于里面的第一个，说明走了至少6步以上，换开头了，如果没到6，那么就是1开头。
+            sheld = [multi_accum / len(left) * i for i in
+                     range(1, len(left) + 1)]  # [6,12,18,24]  如果k 大于里面的第一个，说明走了至少6步以上，换开头了，如果没到6，那么就是1开头。
             for i in range(len(left)):
-                if k <=sheld[i]: break
+                if k <= sheld[i]: break
             tmp.append(left.pop(i))
-            recur(left, k - sheld[i-1] if i >0 else k, tmp)  # 这里是重点， 有可能越界，如果越界说明k不足一个区间（multi_accum / len(left)）的步数，所以用k继续透传下去
+            recur(left, k - sheld[i - 1] if i > 0 else k,
+                  tmp)  # 这里是重点， 有可能越界，如果越界说明k不足一个区间（multi_accum / len(left)）的步数，所以用k继续透传下去
 
-        recur(left,k,cache)
+        recur(left, k, cache)
         return "".join([str(i) for i in self.res])
 
-class Solution2: # 官方答案
+
+class Solution2:  # 官方答案
     def getPermutation(self, n: int, k: int) -> str:
         factorial = [1]
         for i in range(1, n):
@@ -44,8 +49,11 @@ class Solution2: # 官方答案
 
         return "".join(ans)
 
+
 import math
-class Solution3: # readme 解答
+
+
+class Solution3:  # readme 解答
     def getPermutation(self, n: int, k: int) -> str:
         res = ""
         candidates = [str(i) for i in range(1, n + 1)]
@@ -64,4 +72,39 @@ class Solution3: # readme 解答
             n -= 1
         return res
 
-print(Solution3().getPermutation(4,9))
+
+class Solution4:
+    def getFactor(self, length):
+        #if not length:return 0 #这里是关键，空序列也是合法序列，可以枚举出1个
+        res = 1
+        for i in range(1, len(length) + 1):
+            res *= i
+        return res
+
+    def getPermutation(self, n: int, k: int) -> str:
+        self.result = ""
+        nums = list(range(1, n + 1))
+
+        def dfs(trace, k, left):
+            if len(trace) == n:
+                self.result = (trace + left).copy()
+                return True
+
+            sum_factor = 0
+            sum_time = 0
+            for i in range(len(left)):
+                trace.append(left[i])
+                factor = self.getFactor(left[:0] + left[1:])
+                sum_time +=1
+                sum_factor += factor
+                if k <= sum_factor:
+                    find_stop = dfs(trace, k - (sum_time-1)*factor, left[:i] + left[i + 1:])
+                    if find_stop:
+                        return find_stop
+                trace.pop()
+
+        dfs([], k, nums)
+        return "".join([str(x) for x in self.result])
+
+
+print(Solution4().getPermutation(4, 6))
