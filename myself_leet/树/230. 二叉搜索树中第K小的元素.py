@@ -2,9 +2,8 @@
 from typing import List, Optional
 
 """
-给定二叉搜索树（BST）的根节点 root 和要插入树中的值 value ，将值插入二叉搜索树。 返回插入后二叉搜索树的根节点。 输入数据 保证 ，新值和原始二叉搜索树中的任意节点值都不同。
+给定一个二叉搜索树的根节点 root ，和一个整数 k ，请你设计一个算法查找其中第 k 小的元素（从 1 开始计数）。
 
-注意，可能存在多种有效的插入方式，只要树在插入后仍保持为二叉搜索树即可。 你可以返回 任意有效的结果 。
 """
 
 
@@ -30,9 +29,24 @@ class Solution:
         find,val = dfs(root,[])
         return val
 
+    def play(self, root: Optional[TreeNode], k: int) -> int:
+        def dfs(root, cache: List):
+            if not root or len(cache) == k:
+                return
+            dfs(root.left, cache)
+            if k > len(cache):
+                cache.append(root.val)
+            dfs(root.right, cache)
+            return cache
+        res = dfs(root,[])[-1]
+        return res
+
+
 
 
 demo_tree = TreeNode(5, TreeNode(3, TreeNode(2,TreeNode(1)), TreeNode(4)), TreeNode(6))
 
 r = Solution().kthSmallest(demo_tree, 3)
-print(r)
+r2 = Solution().play(demo_tree, 3)
+
+print(r,r2)
