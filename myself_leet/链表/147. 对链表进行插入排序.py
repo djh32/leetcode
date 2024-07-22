@@ -27,15 +27,24 @@ class Solution:
             head = cache
         return dummy.next
 
+    def insertionSortList2(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode(0)
+        # dummy.next = head 这道题的难点在这里，如果给next=head的话，[4,2,1,3] 最后的4会没有空
+        # 而且因为是插入算法，所以一开始的dummy就应该是空
+        while head:
+            save = head.next
+            r1, r2 = dummy, dummy.next
+            while r2 and r2 != head and r2.val < head.val:
+                r1, r2 = r2, r2.next
+            r1.next = head
+            head.next = r2
+            head = save
+        return dummy.next
 
-h0 = ListNode(1)
-h1 = ListNode(5)
-h2 = ListNode(4)
-h3 = ListNode(2)
-h4 = ListNode(3)
-h0.next = h1
-h1.next = h2
-h2.next = h3
-h3.next = h4
-r = Solution().insertionSortList(h0)
+
+nd_list = [ListNode(x) for x in [4, 2, 1, 3]]
+for i in range(3):
+    nd_list[i].next = nd_list[i + 1]
+
+r = Solution().insertionSortList2(nd_list[0])
 print(r)

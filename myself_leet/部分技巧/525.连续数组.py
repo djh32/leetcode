@@ -16,7 +16,7 @@ from typing import List
 输出: 2
 说明: [0, 1] (或 [1, 0]) 是具有相同数量0和1的最长连续子数组。
 """
-class Solution:
+class Solution2: # Error 没有max
     def findMaxLength(self, nums: List[int]) -> int:
         cache = {}
         sums = 0
@@ -31,7 +31,20 @@ class Solution:
                 res = i+1
         return res
 
-sol = Solution().findMaxLength([0,1,1,0,1,1,1,0]
 
-)
+class Solution:
+    def findMaxLength(self, nums: List[int]) -> int:
+        cache = {}
+        sums = 0
+        res = 0
+        for i in range(len(nums)):
+            sums += 1 if nums[i] == 1 else -1
+            if sums not in cache:
+                cache[sums] = i
+            else:
+                res = max(i - cache[sums],res)
+            if sums ==0:
+                res = max(i+1,res)
+        return res
+sol = Solution().findMaxLength([0,1,1,0,1,0,1,0])
 print(sol)
