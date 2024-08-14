@@ -31,6 +31,7 @@ class Solution:
         dummy = ListNode(0)
         # dummy.next = head 这道题的难点在这里，如果给next=head的话，[4,2,1,3] 最后的4会没有空
         # 而且因为是插入算法，所以一开始的dummy就应该是空
+        # fix 自己还以为有难点的，其实思路有问题，参考play是正确思路
         while head:
             save = head.next
             r1, r2 = dummy, dummy.next
@@ -41,10 +42,25 @@ class Solution:
             head = save
         return dummy.next
 
+    def play(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode(0)
+
+        while head:
+            h1, h2 = dummy, dummy.next
+            while h2 and h2.val < head.val:
+                h1, h2 = h2, h2.next
+            save = head.next
+            h1.next = head
+            head.next = h2
+            head = save
+        return dummy.next
+
 
 nd_list = [ListNode(x) for x in [4, 2, 1, 3]]
 for i in range(3):
     nd_list[i].next = nd_list[i + 1]
 
-r = Solution().insertionSortList2(nd_list[0])
-print(r)
+#r = Solution().insertionSortList2(nd_list[0])
+r2 = Solution().insertionSortList2(nd_list[0])
+
+print(r2)
