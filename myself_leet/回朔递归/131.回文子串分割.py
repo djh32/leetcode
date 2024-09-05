@@ -1,5 +1,6 @@
 from typing import List
 from copy import deepcopy
+
 '''
 void backtracking(参数) {
     if (终止条件) {
@@ -22,24 +23,25 @@ void backtracking(参数) {
 
 class Solution:
     def partition(self, s: str) -> List[List[str]]:
-        res= []
-        def isback(strings)->bool:
-            if len(strings) <=1:return True
-            l,r = 0,len(strings)-1
-            while r>l:
+        res = []
+
+        def isback(strings) -> bool:
+            if len(strings) <= 1: return True
+            l, r = 0, len(strings) - 1
+            while r > l:
                 if strings[l] != strings[r]:
                     return False
-                r-=1
-                l+=1
+                r -= 1
+                l += 1
             return True
 
-        def backtracking(strings,tempresult:List):
+        def backtracking(strings, tempresult: List):
             if len(strings) == 0:
                 res.append(deepcopy(tempresult))
                 return
             for idx in range(len(strings)):
-                leftstrings = strings[:idx+1]
-                rightstrings = strings[idx+1:]
+                leftstrings = strings[:idx + 1]
+                rightstrings = strings[idx + 1:]
                 if not isback(leftstrings):
                     continue
                 tempresult.append(leftstrings)
@@ -47,8 +49,42 @@ class Solution:
                 tempresult.pop(-1)
 
             return res
+
         temp = []
-        backtracking(s,temp)
+        backtracking(s, temp)
         return res
 
-Solution().partition("aaba")
+
+def play2(s: str) -> List[List[str]]:
+    res = []
+
+    def back_str(ss: str):
+        if len(ss) < 2: return True
+        l, r = 0, len(ss) - 1
+        while l < r and ss[l] == ss[r]:
+            l += 1
+            r -= 1
+
+        if l >= r:
+            return True
+        else:
+            return False
+    def recur(test_str: List[str], left_str: str):
+        if left_str == "":
+            res.append(deepcopy(test_str))
+
+        layer_temper = test_str
+        for i in range(len(left_str)):
+            left = left_str[:i + 1]
+            layer_temper.append(left)
+            right = left_str[i + 1:]
+            if back_str(left):
+                recur(layer_temper, right)
+            layer_temper.pop(-1)
+
+        return res
+    recur([],s)
+    return res
+
+#print(play2("a"))
+print(play2("aaab"))
