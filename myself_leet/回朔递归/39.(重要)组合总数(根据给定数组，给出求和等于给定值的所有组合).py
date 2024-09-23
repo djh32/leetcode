@@ -71,4 +71,26 @@ class Solution2:
 
         backtracking(candidates, target, [], 0)
         return result
-print(Solution2().combinationSum([4, 3, 7, 2], 7))
+
+class Solution3:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        st_cand = sorted(candidates)
+        result = []
+        def backtracking(st_cand, target, path: List[int], begin):
+            if sum(path)== target:
+                result.append(path.copy())
+                return
+
+            for i in range(begin,len(st_cand)):
+                path.append(st_cand[i])
+                if sum(path) > target:# 最优方法还是排序以后剪枝，不排序需要多次枚举不能提前剪枝进行结束会降低效率。\
+                    path.pop(-1)
+                    break
+                backtracking(st_cand,target,path,i)
+                path.pop(-1)
+
+
+        backtracking(st_cand, target, [], 0)
+        return result
+print(Solution2().combinationSum([4, 3, 7, 1,2], 7))
+print(Solution3().combinationSum([4, 3, 7], 17))

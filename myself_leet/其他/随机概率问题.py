@@ -58,6 +58,33 @@ def rand7():
             else:
                 return -1
 
+"""
+class Solution extends SolBase {
+    public int rand10() {
+        while(true) {
+            int a = rand7();
+            int b = rand7();
+            int num = (a-1)*7 + b; // rand 49
+            if(num <= 40) return num % 10 + 1; // 拒绝采样
+            
+            a = num - 40; // rand 9
+            b = rand7();
+            num = (a-1)*7 + b; // rand 63
+            if(num <= 60) return num % 10 + 1;
+            
+            a = num - 60; // rand 3
+            b = rand7();
+            num = (a-1)*7 + b; // rand 21
+            if(num <= 20) return num % 10 + 1;
+        }
+    }
+}
+
+作者：kkbill
+链接：https://leetcode.cn/problems/implement-rand10-using-rand7/solutions/167850/cong-zui-ji-chu-de-jiang-qi-ru-he-zuo-dao-jun-yun-/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+"""
 
 d = collections.defaultdict()
 for _ in range(1000000):

@@ -34,14 +34,14 @@ class Solution:
         return pre_head.next
 
 
-l11 = ListNode(9)
-l12 = ListNode(9)
-l13 = ListNode(9)
+l11 = ListNode(1)
+l12 = ListNode(1)
+l13 = ListNode(2)
 
 l11.next = l12
 l12.next = l13
 
-l21 = ListNode(9)
+l21 = ListNode(3)
 l22 = ListNode(9)
 
 l21.next = l22

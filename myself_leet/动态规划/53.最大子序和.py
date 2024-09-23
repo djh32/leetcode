@@ -11,5 +11,5 @@ class Solution:
         print(dp)
         return res
 
-
+# 还有分治方法去解决 强化
 Solution().maxSubArray([-2,1,-3,4,-1,2,1,-5,4])

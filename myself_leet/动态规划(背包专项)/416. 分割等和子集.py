@@ -36,6 +36,7 @@ class Solution:
                 if j == 0:
                     table[i][j] = True  # j=0的时候，都为True，0是能到0的
                 else:
+                    # 需要使用nums[i-1] 因为i从1开始，遍历逻辑需要判断num0-n所以是i-1
                     find_idx = j - nums[i-1]  # 当前的j是sum[i][j]能否到达j的标记 ,j<=nums[i]的时候需要判断是否能通过组合
                     if find_idx >= 0:
                         table[i][j] = table[i - 1][j - nums[i-1]] or table[i - 1][j]
