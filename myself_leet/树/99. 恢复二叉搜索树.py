@@ -72,6 +72,29 @@ class Solution:
         if self.x is not None and self.y is not None:
             self.x.val, self.y.val = self.y.val, self.x.val
         return r
+    def recoverTree2(self,root: Optional[TreeNode]): # O(n)的空间复杂度， 因为需要临时存储node后面交换。不如上面的是最优
+        self.tmp_nd_holder = []
+        def dfs(rt:TreeNode):
+            if not rt:
+                return
+            dfs(rt.left)
+            self.tmp_nd_holder.append(rt)
+            dfs(rt.right)
+
+        dfs(root)
+        print([x.val for x in self.tmp_nd_holder])
+        self.x,self.y = None,None
+        for i in range(1,len(self.tmp_nd_holder)):
+            if self.tmp_nd_holder[i-1].val>self.tmp_nd_holder[i].val:
+                if not self.x and not self.y:
+                    self.x = self.tmp_nd_holder[i-1]
+                    self.y = self.tmp_nd_holder[i]
+                elif self.x:
+                    self.y = self.tmp_nd_holder[i]
+        if self.x:
+            self.x.val,self.y.val = self.y.val,self.x.val
+        print([x.val for x in self.tmp_nd_holder])
+        return root
 
 
 # rt = TreeNode(7, TreeNode(2, TreeNode(1), TreeNode(3)), TreeNode(5, TreeNode(6), TreeNode(4)))
