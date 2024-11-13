@@ -64,7 +64,36 @@ def sort_find_fix(lst: deque[str]):
                 continue
     print(res)
 
+def sort_candi_list(lst:List[str], n:int):
+    result = []
+    #dq = lst
+
+    while len(lst)>n:
+        candi_window = set()
+        temp_holder = []
+        iter = 0
+        tile = len(lst)
+        while iter<tile:
+            if lst[iter][1] not in candi_window:
+                item = lst.pop(iter)
+                temp_holder.append(item)
+                item_candi = item[1]
+                candi_window.add(item_candi)
+            else:
+                iter+=1
+            tile = len(lst) #可能越界
+            if len(temp_holder) == n:
+                break
+        result.extend(temp_holder)
+
+    if lst:
+        result.extend(list(lst))
+    return result
+
+
+
 
 #sort_find_fix("B11 B21 B12 B22 B31 B41 B23".replace(" ",',').split(","))
 #sort_find_fix("B11 B12 B13 B14 B21 B22".replace(" ",',').split(","))
-sort_find_fix("B11 B12 B23 B24 B21 B22 B25".replace(" ",',').split(","))
+#sort_find_fix("B11 B12 B23 B24 B21 B22 B25".replace(" ",',').split(","))
+print(sort_candi_list("B11 B21 B12 B22 B31 B41 B23".split(" "),n=4))
