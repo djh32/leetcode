@@ -28,8 +28,6 @@ from typing import List
 输出：0
 解释：在这种情况下, 交易无法获得正利润，所以不参与交易可以获得最大利润，最大利润为 0 。
 """
-class Solution:
-    def maxProfit(self, prices: List[int]) -> int:
 class Solution(object):
     def maxProfit(self, prices):
         """

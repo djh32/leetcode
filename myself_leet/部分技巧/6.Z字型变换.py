@@ -48,5 +48,5 @@ class Solution2():
         return "".join(res)
 
 
-print(Solution().convert("PAYPALISHIRING", 7))
-print(Solution2().convert("AB", 1))
+print(Solution().convert("PAYPALISHIRING", 5))
+print(Solution2().convert("PAYPALISHIRING", 5))
