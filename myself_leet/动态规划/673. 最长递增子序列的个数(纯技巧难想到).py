@@ -44,19 +44,29 @@ class Solution:
             for j in range(i):
 
                 if nums[j] < nums[i]:
-                    if dp[j] + 1 > dp[i]: # f[i] 会被 f[j]+1 直接更新，此时同步直接更新 g[i]=g[j] 因为要保留最大的。
+                    if dp[j] + 1 > dp[i]:  # f[i] 会被 f[j]+1 直接更新，此时同步直接更新 g[i]=g[j] 因为要保留最大的。
                         dp[i] = dp[j] + 1
                         count[i] = count[j]
-                    elif dp[j]+1 == dp[i]: # 说明找到了一个新的符合条件的前驱，此时将值继续累加到方案数当中，即有 g[i]+=g[j] 累加和
+                    elif dp[j] + 1 == dp[i]:  # 说明找到了一个新的符合条件的前驱，此时将值继续累加到方案数当中，即有 g[i]+=g[j] 累加和
                         count[i] += count[j]
                     dp[i] = max(dp[i], dp[j] + 1)
-        #print(dp,count)
+        # print(dp,count)
         dp_max = max(dp)
         res = 0
         for i in range(len(nums)):
             res += dp[i] if dp[i] == dp_max else 0
         return res
 
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        dp = [1 for _ in range(len(nums))]
+        for i in range(len(nums)):
+            for j in range(i):
+                if nums[j] < nums[i]:
+                    dp[i] = max(dp[i], dp[j] + 1)
+        return dp
+
+    def findNumberOfLIS222(self, nums: List[int]) -> int:
+        dp = self.lengthOfLIS(nums)
 
 
-Solution().findNumberOfLIS([1, 2,4,3,5,4,7,2])
+Solution().findNumberOfLIS222([1, 2, 4, 3, 5, 4, 7, 2])

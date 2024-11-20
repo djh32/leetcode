@@ -1,5 +1,6 @@
 # coding=utf-8
 from typing import List
+
 """
 给你一个整数数组 nums ，找到其中最长严格递增子序列的长度。
 
@@ -25,18 +26,42 @@ from typing import List
 
 
 """
+
+
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
-        dp = [1 for  _ in range(len(nums))]
+        # O(n^2)时间 + O(n)空间
+        dp = [1 for _ in range(len(nums))]
 
         for i in range(len(nums)):
             for j in range(i):
                 if nums[j] < nums[i]:
-                    dp[i] = max(dp[i], dp[j]+1)
-        #print(dp)
-        return max(dp[-1])
+                    dp[i] = max(dp[i], dp[j] + 1)
+        # print(dp)
+        return max(dp)
 
-Solution().lengthOfLIS([1,3,6,7,9,4,10,5,6])
+    def lengthOfLISOnlogn(self, nums: List[int]) -> int:
+        # [7,8,9,1,2,3,10,12] 利用有序数组结合二分法，能二分快速找到o(logn)有序数组里面的替换位置，
+        holder = [0] * len(nums)
+        result_num = 0
+        for k in nums:
+            left, right = 0, result_num - 1  # [left,right] 所以需要 left<=right
+            while left <= right:
+                m_idx = (left + right) // 2
+                if holder[m_idx] == k:
+                    #left = m_idx +1  #允许非连续
+                    right = m_idx -1 # 不允许连续
+                elif holder[m_idx] > k:
+                    right = m_idx - 1
+                else:
+                    left = m_idx + 1
+            holder[left] = k
+            if left == result_num:
+                result_num += 1
+                holder[left] = k
+        #print(holder)
+        return result_num
 
 
-
+# print(Solution().lengthOfLIS([1,3,6,7,9,4,10,5,6]))
+print(Solution().lengthOfLISOnlogn([7, 8, 9, 1, 2, 3, 10,8,8, 12]))
