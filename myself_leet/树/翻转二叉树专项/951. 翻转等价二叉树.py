@@ -6,7 +6,7 @@ class TreeNode:
         self.left = left
         self.right = right
 class Solution:
-    def change_same(self,t1,t2):
+    def change_same(self,t1,t2): # 这个是错的，因为按照层序遍历+set会导致下层节点的根寻找错误
         q1 = deque([t1])
         q2 = deque([t2])
         while q1 or q2:
@@ -20,11 +20,27 @@ class Solution:
                 return False
         return True
 
+    def flipEquiv(self, root1, root2):
+        """
+        :type root1: Optional[TreeNode]
+        :type root2: Optional[TreeNode]
+        :rtype: bool
+        """
+        if root1 is None and root2 is None: return True
+        if root1 is None or root2 is None: return False
+        if root1.val != root2.val: return False
+        return (
+                (self.flipEquiv(root1.left,root2.left) and self.flipEquiv(root1.right,root2.right))
+                or(
+                self.flipEquiv(root1.left, root2.right) and self.flipEquiv(root1.right, root2.left))
+        )
 
 t1 = TreeNode(1,TreeNode(2),TreeNode(3,None,TreeNode(5)))
 t2 = TreeNode(1,TreeNode(3),TreeNode(2,TreeNode(5),None))
 
 print(Solution().change_same(t1,t2))
+print(Solution().flipEquiv(t1,t2))
+
 
 
 

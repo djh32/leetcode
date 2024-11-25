@@ -1,6 +1,4 @@
 # coding=utf-8
-# 103.二叉树的锯齿形层序遍历.py
-# Definition for a binary tree node.
 from typing import List, Optional
 
 
