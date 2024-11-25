@@ -48,8 +48,8 @@ class Solution:
         if head is None or head.next is None or head.next.next is None:
             return head
         mid = self.getMidNode(head)
-        part2 = self.recurReverse(mid.next)
-        mid.next = None
+        part2 = self.recurReverse(mid.next) # 这里一定注意是mid.next 如果不是的话，mind会重复
+        mid.next = None # 因为4链接5不会断， 这里真正分成两部分了
 
         dummy = ListNode(0)
         flag = True
@@ -67,8 +67,8 @@ class Solution:
                 flag = True
         return dummy.next
 
-tp = [ListNode(x) for x in range(1)]
-for i in range(0):
+tp = [ListNode(x) for x in [1,2,3,4,5,6,7]]
+for i in range(len(tp)-1):
     tp[i].next = tp[i+1]
 
 head= Solution().reorderList(tp[0])
