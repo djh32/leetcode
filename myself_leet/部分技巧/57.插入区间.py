@@ -26,7 +26,7 @@ class Solution:
 
     def intersected(self,a, b):
         if a[0] > b[1] or a[1] < b[0]: # 当前i的最小值比new的还要大， 或者 当前i的大值比new的要小，都是不能插入的点，否命题都是能插入的点
-            # 其实这里只用a[0] > b[1] 就行了
+            # 其实这里只用a[0] > b[1] 就行了 因为intervals[i][1]<newInterval[0]出来的话，中间的时候已经确认不可能a[1] < b[0]
             return False
         return True
 
