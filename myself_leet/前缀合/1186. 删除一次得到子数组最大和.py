@@ -27,58 +27,17 @@
 -104 <= arr[i] <= 104
 """
 
-from typing import Optional
-
-# Definition for singly-linked list.
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-class Solution:
-    def removeZeroSumSublists(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        pre = ListNode(0,head)
-        info_dict = {0:pre}
-        pre_sum = 0
-        while head is not None: # 虽然没问题但是没有技巧。
-            pre_sum += head.val
-            if pre_sum in info_dict:
-                delete_nd = info_dict[pre_sum].next
-                delete_pre_sum = pre_sum+delete_nd.val
-                while delete_nd !=head:
-                    info_dict.pop(delete_pre_sum)
-                    delete_nd = delete_nd.next
-                    delete_pre_sum += delete_nd.val
-                info_dict[pre_sum].next = head.next
-                head = head.next
-            else:
-                info_dict[pre_sum] = head  # mark
-                head = head.next
-        return pre.next
-
-    def removeZeroSumSublists2(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        # 相当精彩的题目
-        info_dict = {}
-        pre = ListNode(0,head)
-        cur = pre
-        sums =0
-        while cur is not None:
-            sums += cur.val
-            info_dict[sums] = cur
-            cur = cur.next
-        cur = pre
-        sums =0
-        while cur is not None:
-            sums += cur.val
-            cur.next = info_dict[sums].next
-            cur = cur.next
-        return pre.next
+from math import inf
 
 
-l = [ListNode(v) for v in [1,2,3,4,5,-9,-3]]
-for i in range(len(l)-1):
-    l[i].next = l[i+1]
-#l = Solution().removeZeroSumSublists(l[0])
-l2 = Solution().removeZeroSumSublists2(l[0])
+def delete_once(nums)->int:
+    f0 = [-inf]+[-inf for _ in range(len(nums))]
+    f1 = [-inf]+[-inf for _ in range(len(nums))]
+    for i in range(1,len(nums)+1):
+        f0[i] = max(f0[i-1],0) + nums[i-1] # 不删除最大
+        f1[i] = max(f0[i-1], f1[i-1]+nums[i-1]) # 删除一个最大
+    return max(f0[-1],f1[-1])
 
-print(l2)
+delete_once([1,-2,0,3])
+
 
