@@ -30,7 +30,7 @@ def recur_find2(nums: int):  # 小数正确
 
 
 
-print(recur_find(0.4))
+print(recur_find(0.2))
 
 #print(pow(1.5,2))
 #print(recur_find2(0.23))
