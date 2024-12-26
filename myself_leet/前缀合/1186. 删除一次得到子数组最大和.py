@@ -28,7 +28,7 @@
 """
 
 from math import inf
-
+from typing import List
 
 def delete_once(nums)->int:
     f0 = [-inf]+[-inf for _ in range(len(nums))]
@@ -40,4 +40,12 @@ def delete_once(nums)->int:
 
 delete_once([1,-2,0,3])
 
+class Solution:
+    def maximumSum(self, arr: List[int]) -> int:
+        ans = f0 = f1 = -inf
+        for x in arr:
+            f1 = max(f1 + x, f0)  # 注：手动 if 比大小会更快
+            f0 = max(f0, 0) + x
+            ans = max(ans, f0, f1)
+        return ans
 
