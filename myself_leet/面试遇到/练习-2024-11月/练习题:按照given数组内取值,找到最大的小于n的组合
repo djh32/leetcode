@@ -1,0 +1,37 @@
+# coding=utf-8
+'''
+题目：给定数组nums, 只从1~9之间取数的数组，给定一个n =2599 （可变），求从nums中组合(可重复选取)出小于n的最大数。
+拼出小于limit的最大数（递归）
+
+
+这是一道很难的题，暴力解法比较简单，但回溯判断条件的解法比较难。
+
+'''
+# note 字节题，有更难的回溯做法，很难有兴趣再看
+class Solution(object):
+    def __init__(self):
+        self.holdmax = float('-inf')
+# 自己写 暴力解：
+    def find_min_by_given_number(self,given_num, n):
+
+        def dfs(now_num, target, level):
+            if now_num <= target:
+                if now_num > self.holdmax:
+                    self.holdmax = now_num
+            else:
+                return False
+
+            for num in given_num:
+                need_stop = dfs(now_num*10 + num,target,level+1)
+                if need_stop == False:
+                    break
+            return True
+
+        dfs(0,n,0)
+        return self.holdmax
+
+print(Solution().find_min_by_given_number([2,5,9],53))
+
+
+
+

@@ -1,0 +1,32 @@
+#coding=utf-8
+'''
+练习题:反转一个区间,使得翻转以后1的数量最多,给出1数量结果
+例子：
+1,0,1,0,0,0,1,0,0
+最好结果翻转成：
+1,0,1,1,1,1,0,1,1
+
+return 7个1
+'''
+# note 非原题，bilibili上看到的
+from typing import List
+
+def change(x):
+    if x ==1:return -1
+    elif x ==0:return 1
+def best_reverse_sub_arr(nums: List[int]) -> int:
+    current_one_nums = sum(nums)
+    change_nums = [change(x) for x in nums]
+    now,pre = 0,float("-inf")
+    max_add = 0 # max 不能是-inf 有问题
+    for i in range(len(change_nums)):
+        now = max(change_nums[i],change_nums[i] + pre)
+        max_add = max(now,max_add)
+        pre = now
+    return max_add + current_one_nums
+
+
+
+print(best_reverse_sub_arr([1,0,1,1,1,0,1,0,1]))
+
+
