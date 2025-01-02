@@ -53,8 +53,8 @@ class Solution:
                 find_now, _ = quick_sort(nums, left, right)
         return nums[find_now]
 
-
-def quick_sort(nums, lidx, ridx):  # quick sort https://blog.csdn.net/qq_69369227/article/details/130040525
+ # quick sort https://blog.csdn.net/qq_69369227/article/details/130040525
+def quick_sort(nums, lidx, ridx):
     pivot = 0
     cache = nums[pivot]
     while lidx < ridx:
@@ -71,4 +71,4 @@ def quick_sort(nums, lidx, ridx):  # quick sort https://blog.csdn.net/qq_6936922
 nums = [3, 2, 1, 4, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 # print(quick_sort(nums, 0, len(nums) - 1))
 
-print(Solution().findKthLargest2(nums, 5))
+print(Solution().findKthLargest(nums, 9))

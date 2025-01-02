@@ -33,10 +33,56 @@ medianFinder.findMedian(); // return 2.0
 
 """
 
-a = [1,5,3,8,23,9,4]
-ha = heapq(a)
-print(ha)
+import heapq
 
+
+class MedianFinder:
+
+    def __init__(self):
+        self.bg_first_hp = []
+        self.sm_first_hp =[]
+
+    def addNum(self, num: int) -> None:
+        if len(self.bg_first_hp) == len(self.sm_first_hp):
+            heapq.heappush(self.bg_first_hp,-num)
+            min = heapq.heappop(self.bg_first_hp)
+            heapq.heappush(self.sm_first_hp,-min)
+        else:
+            heapq.heappush(self.sm_first_hp,num)
+            max_hp = heapq.heappop(self.sm_first_hp)
+            heapq.heappush(self.bg_first_hp,-max_hp)
+
+    def findMedian(self) -> float:
+        if len(self.bg_first_hp) == len(self.sm_first_hp):
+            heapq.heapify(self.sm_first_hp)
+            heapq.heapify(self.bg_first_hp)
+            res = (self.sm_first_hp[0] -self.bg_first_hp[0])/2.0
+        else:
+            heapq.heapify(self.sm_first_hp)
+            res = self.sm_first_hp[0]
+        return res
+
+# Your MedianFinder object will be instantiated and called as such:
+# obj = MedianFinder()
+# obj.addNum(num)
+# param_2 = obj.findMedian()
+
+
+
+mf = MedianFinder()
+mf.addNum(1)
+mf.addNum(3)
+mf.addNum(5)
+mf.addNum(7)
+mf.addNum(9)
+mf.addNum(11)
+mf.addNum(13)
+mf.addNum(15)
+mf.findMedian()
+mf.addNum(17)
+mf.addNum(19)
+
+pass
 
 
 
