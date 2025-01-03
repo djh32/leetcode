@@ -18,7 +18,6 @@ def chinese_to_digits(chinese_info):
     final_res = 0
     res = 0
     i = 0
-    style = 0
     end_i = len(chinese_info)
     while i < len(chinese_info):
         c_s = chinese_info[i]
@@ -44,3 +43,4 @@ def chinese_to_digits(chinese_info):
 
 
 print(chinese_to_digits("八千九百万"))
+print(chinese_to_digits("一亿三百万零七千"))
