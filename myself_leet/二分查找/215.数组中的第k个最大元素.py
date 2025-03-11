@@ -34,6 +34,20 @@ class Solution:
                 nums[lidx], nums[ridx] = nums[ridx], nums[lidx]
             nums[lidx], nums[pivot] = nums[pivot], nums[lidx]
             return lidx, nums[lidx]
+        def quick_sort_3(nums, lidx, ridx):  # 尽量让pivot的index在中间的解法，过滤大量左边重复是1的情况
+            partition = nums[lidx]
+            l = lidx + 1
+            r = ridx
+            while True:
+                while l <= r and nums[l] <= partition: l += 1
+                while r >= l and nums[r] >= partition: r -= 1
+                if l >= r: break
+                nums[l], nums[r] = nums[r], nums[l]
+                l += 1
+                r -= 1
+            pivot_idx = min(l, r)  # l,r较小者才是pivot的应该存在的位置。
+            nums[pivot_idx], nums[lidx] = nums[lidx], nums[pivot_idx]
+            return pivot_idx,nums[pivot_idx]
 
         # random.shuffle(nums)
         find_now, _ = quick_sort(nums, 0, len(nums) - 1)
@@ -68,7 +82,10 @@ def quick_sort(nums, lidx, ridx):
     return nums
 
 
-nums = [3, 2, 1, 4, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+nums = [3,2,1,5,6,4]
 # print(quick_sort(nums, 0, len(nums) - 1))
 
-print(Solution().findKthLargest(nums, 9))
+#print(Solution().findKthLargest(nums, 9))
+x = Solution().findKthLargest_2(nums, 2)
+#x  = quick_sort_3(nums,0,len(nums)-1)
+print(x)

@@ -42,5 +42,5 @@ def chinese_to_digits(chinese_info):
     return final_res + res
 
 
-print(chinese_to_digits("八千九百万"))
+print(chinese_to_digits("八千九百万零三千一百零九"))
 print(chinese_to_digits("一亿三百万零七千"))
